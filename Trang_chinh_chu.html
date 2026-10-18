@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hóa Online - Lộ trình học</title>
+    <link rel="stylesheet" href="Trang_chinh_chu.css?v=2">
+</head>
+<body>
+    <div class="web-page">
+        <header class="site-header">
+            <div class="header-left">
+                <a class="logo-wrap" href="#">
+                    <span class="logo-icon">H</span>
+                    <span class="logo-text">Hóa Online</span>
+                </a>
+            </div>
+
+            <nav class="main-menu">
+                <a class="active" href="#">Trang chủ</a>
+                <a href="#">Môn Hóa</a>
+                <a href="#">Lộ trình</a>
+                <a href="#">Bài tập</a>
+                <a href="#">Kiểm tra</a>
+                <a href="Hoclieu.html">Học liệu</a>
+            </nav>
+
+            <div class="header-right">
+                <button class="search-btn" type="button">⌕</button>
+                <a class="login-btn" href="Dang_nhap.html">Đăng nhập</a>
+            </div>
+        </header>
+
+        <main class="page-wrapper">
+            <section class="course-area">
+                <aside class="course-sidebar">
+                    <div class="course-sidebar-head">
+                        <span class="small-label">Chương trình</span>
+                        <h3>Môn Hóa học</h3>
+                    </div>
+
+                    <div class="grade-list">
+                        <a class="grade-link active" href="#" data-grade="7">
+                            <span class="grade-icon">7</span>
+                            <span class="grade-text">Hóa lớp 7</span>
+                            <span class="grade-arrow">›</span>
+                        </a>
+                        <a class="grade-link" href="#" data-grade="8">
+                            <span class="grade-icon">8</span>
+                            <span class="grade-text">Hóa lớp 8</span>
+                            <span class="grade-arrow">›</span>
+                        </a>
+                        <a class="grade-link" href="#" data-grade="9">
+                            <span class="grade-icon">9</span>
+                            <span class="grade-text">Hóa lớp 9</span>
+                            <span class="grade-arrow">›</span>
+                        </a>
+                    </div>
+
+                    <div class="chapter-box">
+                        <div class="chapter-title">Chuyên đề</div>
+                        <ul class="chapter-list">
+                            <li><a href="#">Chất - Nguyên tử - Phân tử</a></li>
+                            <li><a href="#">Phản ứng hóa học</a></li>
+                            <li><a href="Hoclieu.html">Bảng tuần hoàn</a></li>
+                            <li><a href="#">Kim loại - Phi kim</a></li>
+                            <li><a href="#">Oxygen - Nước - Axit</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="plan-box">
+                        <span class="small-label">Kế hoạch học</span>
+                        <div class="plan-date">Tuần 12</div>
+                        <div class="plan-progress">
+                            <span class="plan-bar" style="width: 67%;"></span>
+                        </div>
+                        <div class="plan-meta">
+                            <span>07/10 bài</span>
+                            <span>67%</span>
+                        </div>
+                    </div>
+                </aside>
+
+                <section class="content-panel">
+                    <section class="content-banner">
+                        <div class="content-banner-text">
+                            <span class="small-label">Gợi ý học hôm nay</span>
+                            <h1>Luyện tập Hóa học THCS</h1>
+                            <p class="banner-description">
+                                Ôn công thức, hiểu chất hóa học và luyện bài tập theo từng lớp 7, 8, 9.
+                            </p>
+                            <div class="banner-actions">
+                                <a class="primary-btn" id="startLearning" href="Dang_nhap.html">Bắt đầu học</a>
+                                <a class="ghost-btn" href="#lessonRecommendations">Xem lộ trình</a>
+                            </div>
+                        </div>
+                        <div class="banner-image-wrap">
+                            <div class="chemistry-image">
+                                <span class="atom atom-one">H</span>
+                                <span class="atom atom-two">O</span>
+                                <span class="atom atom-three">Na</span>
+                                <span class="chemistry-ring"></span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="course-tabs">
+                        <a class="tab-link active" href="#" data-grade="7">Lớp 7</a>
+                        <a class="tab-link" href="#" data-grade="8">Lớp 8</a>
+                        <a class="tab-link" href="#" data-grade="9">Lớp 9</a>
+                    </section>
+
+                    <section class="utility-bar">
+                        <div class="search-box">
+                            <input id="lessonSearch" type="search" placeholder="Tìm bài học hoặc công thức">
+                            <button id="lessonSearchButton" class="search-icon" type="button">⌕</button>
+                        </div>
+                        <div class="utility-actions">
+                            <button id="randomLesson" class="utility-btn" type="button">🎯 Gợi ý ngẫu nhiên</button>
+                            <button id="focusMode" class="utility-btn" type="button">☼ Chế độ tập trung</button>
+                        </div>
+                        <span id="lessonResultCount" class="lesson-result-count">3 bài học</span>
+                    </section>
+
+                    <section class="lesson-grid" id="gradeContent" aria-live="polite"></section>
+
+                    <section class="recommendation-strip" id="lessonRecommendations">
+                        <div class="recommendation-head">
+                            <span class="small-label">Gợi ý dành cho bạn</span>
+                            <button id="refreshRecommendations" class="utility-btn small-utility-btn" type="button">↻ Làm mới</button>
+                        </div>
+                        <div class="recommendation-list">
+                            <article class="recommendation-card">
+                                <span class="recommendation-tag">Bài 1</span>
+                                <span class="recommendation-title">Chất và nguyên tử</span>
+                                <span class="recommendation-text">Nguyên tử, phân tử, chất và phản ứng hóa học</span>
+                            </article>
+                            <article class="recommendation-card">
+                                <span class="recommendation-tag">Bài 2</span>
+                                <span class="recommendation-title">Phản ứng hóa học</span>
+                                <span class="recommendation-text">Phương trình hóa học và cân bằng phản ứng</span>
+                            </article>
+                            <article class="recommendation-card">
+                                <span class="recommendation-tag">Bài 3</span>
+                                <span class="recommendation-title">Bảng tuần hoàn</span>
+                                <span class="recommendation-text">Nguyên tố hóa học và tính chất chu kỳ</span>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="formula-section">
+                        <div class="formula-head">
+                            <div>
+                                <span class="small-label">Công thức Hóa học</span>
+                                <h2>Công thức THCS</h2>
+                            </div>
+                            <a class="ghost-btn small-btn" href="#">Mở tài liệu</a>
+                        </div>
+                    </section>
+
+                    <section class="exercise-box">
+                        <div class="exercise-head">
+                            <div>
+                                <span class="small-label">Bài luyện</span>
+                                <h2>Luyện tập từ vựng Hóa</h2>
+                            </div>
+                            <a class="ghost-btn small-btn" href="#">Tất cả bài</a>
+                        </div>
+                    </section>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <div id="featureToast" class="feature-toast"></div>
+
+    <script src="learningData.js"></script>
+    <script src="features.js"></script>
+    <script src="script.js?v=4"></script>
+</body>
+</html>

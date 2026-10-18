@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Học liệu - Bảng tuần hoàn nguyên tố</title>
+  <link rel="stylesheet" href="Trang_chinh_chu.css?v=2" />
+  <link rel="stylesheet" href="Hoclieu.css?v=15" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topic-header">
+      <span class="topic-badge">Học liệu</span>
+      <h1>Bảng tuần hoàn nguyên tố hóa học</h1>
+      <a class="home-link" href="Game_xep_bthhh.html">Luyện tập sắp xếp</a>
+      <a class="home-link" href="Trang_chinh_chu.html">Về trang chính</a>
+    </header>
+
+    <div class="periodic-wrap">
+      <div class="filter-bar" aria-label="Phân loại nguyên tố">
+        <button class="filter-btn active" type="button" data-filter="all">Tất cả</button>
+        <button class="filter-btn" type="button" data-filter="metal">Kim loại</button>
+        <button class="filter-btn" type="button" data-filter="nonmetal">Phi kim</button>
+        <button class="filter-btn" type="button" data-filter="metalloid">Á kim</button>
+        <button class="filter-btn" type="button" data-filter="halogen">Halogen</button>
+        <button class="filter-btn" type="button" data-filter="noble">Khí hiếm</button>
+      </div>
+
+      <div class="legend-row" aria-label="Bảng chú giải nhóm nguyên tố">
+        <button class="legend-item" type="button" data-group="alkali" aria-pressed="false"><span class="legend-dot alkali"></span>Kim loại kiềm</button>
+        <button class="legend-item" type="button" data-group="alkaline-earth" aria-pressed="false"><span class="legend-dot alkaline-earth"></span>Kim loại kiềm thổ</button>
+        <button class="legend-item" type="button" data-group="lanthanoid" aria-pressed="false"><span class="legend-dot lanthanoid"></span>Lantan</button>
+        <button class="legend-item" type="button" data-group="actinoid" aria-pressed="false"><span class="legend-dot actinoid"></span>Actini</button>
+        <button class="legend-item" type="button" data-group="transition-metal" aria-pressed="false"><span class="legend-dot transition-metal"></span>Kim loại chuyển tiếp</button>
+        <button class="legend-item" type="button" data-group="post-transition-metal" aria-pressed="false"><span class="legend-dot post-transition-metal"></span>Kim loại hậu chuyển tiếp</button>
+        <button class="legend-item" type="button" data-group="metalloid" aria-pressed="false"><span class="legend-dot metalloid"></span>Á kim</button>
+        <button class="legend-item" type="button" data-group="other-nonmetal" aria-pressed="false"><span class="legend-dot other-nonmetal"></span>Phi kim</button>
+        <button class="legend-item" type="button" data-group="noble-gas" aria-pressed="false"><span class="legend-dot noble-gas"></span>Khí hiếm</button>
+        <button class="legend-item" type="button" data-group="unknown" aria-pressed="false"><span class="legend-dot unknown"></span>Chưa xác định</button>
+      </div>
+
+      <div class="periodic-layout">
+        <div class="periodic-board" id="periodicBoard" aria-live="polite"></div>
+
+        <aside class="element-detail" aria-live="polite">
+          <span class="detail-label">Nguyên tố được chọn</span>
+          <div class="detail-symbol" id="detailSymbol">O</div>
+          <div class="detail-name" id="detailName">Oxygen</div>
+          <p class="detail-text" id="detailText"></p>
+          <ul class="detail-list">
+            <li><span>Số hiệu</span><strong id="detailNumber">8</strong></li>
+            <li><span>Phân loại</span><strong id="detailCategory">Phi kim</strong></li>
+            <li><span>Nguyên tử khối</span><strong id="detailMass">15.999</strong></li>
+            <li><span>Hóa trị thường gặp</span><strong id="detailValence">II</strong></li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const englishNames = {
+      H: 'Hydrogen', He: 'Helium', Li: 'Lithium', Be: 'Beryllium', B: 'Boron', C: 'Carbon', N: 'Nitrogen', O: 'Oxygen', F: 'Fluorine', Ne: 'Neon',
+      Na: 'Sodium', Mg: 'Magnesium', Al: 'Aluminum', Si: 'Silicon', P: 'Phosphorus', S: 'Sulfur', Cl: 'Chlorine', Ar: 'Argon', K: 'Potassium', Ca: 'Calcium',
+      Sc: 'Scandium', Ti: 'Titanium', V: 'Vanadium', Cr: 'Chromium', Mn: 'Manganese', Fe: 'Iron', Co: 'Cobalt', Ni: 'Nickel', Cu: 'Copper', Zn: 'Zinc',
+      Ga: 'Gallium', Ge: 'Germanium', As: 'Arsenic', Se: 'Selenium', Br: 'Bromine', Kr: 'Krypton', Rb: 'Rubidium', Sr: 'Strontium', Y: 'Yttrium', Zr: 'Zirconium',
+      Nb: 'Niobium', Mo: 'Molybdenum', Tc: 'Technetium', Ru: 'Ruthenium', Rh: 'Rhodium', Pd: 'Palladium', Ag: 'Silver', Cd: 'Cadmium', In: 'Indium', Sn: 'Tin',
+      Sb: 'Antimony', Te: 'Tellurium', I: 'Iodine', Xe: 'Xenon', Cs: 'Cesium', Ba: 'Barium', La: 'Lanthanum', Ce: 'Cerium', Pr: 'Praseodymium', Nd: 'Neodymium',
+      Pm: 'Promethium', Sm: 'Samarium', Eu: 'Europium', Gd: 'Gadolinium', Tb: 'Terbium', Dy: 'Dysprosium', Ho: 'Holmium', Er: 'Erbium', Tm: 'Thulium', Yb: 'Ytterbium',
+      Lu: 'Lutetium', Hf: 'Hafnium', Ta: 'Tantalum', W: 'Tungsten', Re: 'Rhenium', Os: 'Osmium', Ir: 'Iridium', Pt: 'Platinum', Au: 'Gold', Hg: 'Mercury',
+      Tl: 'Thallium', Pb: 'Lead', Bi: 'Bismuth', Po: 'Polonium', At: 'Astatine', Rn: 'Radon', Fr: 'Francium', Ra: 'Radium', Ac: 'Actinium', Th: 'Thorium',
+      Pa: 'Protactinium', U: 'Uranium', Np: 'Neptunium', Pu: 'Plutonium', Am: 'Americium', Cm: 'Curium', Bk: 'Berkelium', Cf: 'Californium', Es: 'Einsteinium', Fm: 'Fermium',
+      Md: 'Mendelevium', No: 'Nobelium', Lr: 'Lawrencium', Rf: 'Rutherfordium', Db: 'Dubnium', Sg: 'Seaborgium', Bh: 'Bohrium', Hs: 'Hassium', Mt: 'Meitnerium', Ds: 'Darmstadtium',
+      Rg: 'Roentgenium', Cn: 'Copernicium', Nh: 'Nihonium', Fl: 'Flerovium', Mc: 'Moscovium', Lv: 'Livermorium', Ts: 'Tennessine', Og: 'Oganesson'
+    };
+
+    const periodicData = [
+      { number: 1, symbol: 'H', name: 'Hiđro', category: 'nonmetal', row: 1, col: 1, info: 'Hiđro là nguyên tố nhẹ nhất, chiếm phần lớn khối lượng của sao và là thành phần chính của nước.' },
+      { number: 2, symbol: 'He', name: 'Heli', category: 'noble', row: 1, col: 18, info: 'Heli là khí hiếm, rất nhẹ, không cháy và được dùng trong khinh khí cầu và máy quét MRI.' },
+      { number: 3, symbol: 'Li', name: 'Liti', category: 'metal', row: 2, col: 1, info: 'Liti là kim loại nhẹ, mềm, được dùng trong pin và hợp kim công nghệ cao.' },
+      { number: 4, symbol: 'Be', name: 'Berili', category: 'metal', row: 2, col: 2, info: 'Berili là kim loại cứng, nhẹ, có tính đàn hồi và được dùng trong hợp kim hàng không.' },
+      { number: 5, symbol: 'B', name: 'Bo', category: 'metalloid', row: 2, col: 13, info: 'Bo là á kim, có tính chất trung gian giữa kim loại và phi kim, dùng trong thủy tinh và chất chống cháy.' },
+      { number: 6, symbol: 'C', name: 'Cacbon', category: 'nonmetal', row: 2, col: 14, info: 'Cacbon có nhiều dạng thù hình như than chì, kim cương và graphene.' },
+      { number: 7, symbol: 'N', name: 'Nitơ', category: 'nonmetal', row: 2, col: 15, info: 'Nitơ chiếm khoảng 78% không khí, rất quan trọng cho protein và thực vật.' },
+      { number: 8, symbol: 'O', name: 'Oxy', category: 'nonmetal', row: 2, col: 16, info: 'Oxy cần cho hô hấp và quá trình đốt cháy; nó là thành phần chính của nước.' },
+      { number: 9, symbol: 'F', name: 'Flo', category: 'halogen', row: 2, col: 17, info: 'Flo là phi kim rất hoạt động và mạnh về tính oxi hóa, có nhiều ứng dụng trong công nghiệp và y tế.' },
+      { number: 10, symbol: 'Ne', name: 'Neon', category: 'noble', row: 2, col: 18, info: 'Neon là khí hiếm sáng màu, được dùng trong đèn neon và biển quảng cáo.' },
+      { number: 11, symbol: 'Na', name: 'Natri', category: 'metal', row: 3, col: 1, info: 'Natri là kim loại kiềm, rất phản ứng với nước, tạo thành dung dịch kiềm.' },
+      { number: 12, symbol: 'Mg', name: 'Magie', category: 'metal', row: 3, col: 2, info: 'Magie là kim loại nhẹ và được dùng trong hợp kim và thuốc kháng axit.' },
+      { number: 13, symbol: 'Al', name: 'Nhôm', category: 'metal', row: 3, col: 13, info: 'Nhôm là kim loại nhẹ, bền, dẫn điện tốt và được dùng phổ biến trong đời sống và sản xuất.' },
+      { number: 14, symbol: 'Si', name: 'Silic', category: 'metalloid', row: 3, col: 14, info: 'Silic là á kim quan trọng trong công nghiệp điện tử và làm chất bán dẫn.' },
+      { number: 15, symbol: 'P', name: 'Photpho', category: 'nonmetal', row: 3, col: 15, info: 'Photpho là nguyên tố thiết yếu cho năng lượng và cấu trúc ADN, ARN, ATP.' },
+      { number: 16, symbol: 'S', name: 'Lưu huỳnh', category: 'nonmetal', row: 3, col: 16, info: 'Lưu huỳnh là phi kim có nhiều ứng dụng trong hóa chất và sản xuất axit sunfuric.' },
+      { number: 17, symbol: 'Cl', name: 'Clo', category: 'halogen', row: 3, col: 17, info: 'Clo là halogen dùng để khử trùng nước và là thành phần của muối ăn.' },
+      { number: 18, symbol: 'Ar', name: 'Argon', category: 'noble', row: 3, col: 18, info: 'Argon là khí hiếm, không phản ứng, dùng trong hàn điện và đèn.' },
+      { number: 19, symbol: 'K', name: 'Kali', category: 'metal', row: 4, col: 1, info: 'Kali là kim loại kiềm rất hoạt động, quan trọng cho cơ thể và nông nghiệp.' },
+      { number: 20, symbol: 'Ca', name: 'Canxi', category: 'metal', row: 4, col: 2, info: 'Canxi là kim loại quan trọng cho xương, răng và tế bào cơ.' },
+      { number: 21, symbol: 'Sc', name: 'Scandi', category: 'metal', row: 4, col: 3, info: 'Scandi là kim loại chuyển tiếp, dùng trong hợp kim và sản xuất đèn chiếu sáng.' },
+      { number: 22, symbol: 'Ti', name: 'Titan', category: 'metal', row: 4, col: 4, info: 'Titan là kim loại nhẹ, bền và chống ăn mòn, dùng trong hàng không và y tế.' },
+      { number: 23, symbol: 'V', name: 'Vanadi', category: 'metal', row: 4, col: 5, info: 'Vanadi là kim loại chuyển tiếp, dùng trong hợp kim thép chịu lực cao.' },
+      { number: 24, symbol: 'Cr', name: 'Crom', category: 'metal', row: 4, col: 6, info: 'Crom bền, cứng và chống gỉ, được dùng để mạ và sản xuất thép.' },
+      { number: 25, symbol: 'Mn', name: 'Mangan', category: 'metal', row: 4, col: 7, info: 'Mangan là kim loại chuyển tiếp, dùng trong thép và sản phẩm điện tử.' },
+      { number: 26, symbol: 'Fe', name: 'Sắt', category: 'metal', row: 4, col: 8, info: 'Sắt là kim loại phổ biến, dùng làm thép và tham gia vận chuyển oxy trong máu.' },
+      { number: 27, symbol: 'Co', name: 'Cobalt', category: 'metal', row: 4, col: 9, info: 'Cobalt là kim loại chuyển tiếp, có nhiều ứng dụng trong pin và hợp kim.' },
+      { number: 28, symbol: 'Ni', name: 'Niken', category: 'metal', row: 4, col: 10, info: 'Niken là kim loại bền, thường dùng trong hợp kim và mạ chống gỉ.' },
+      { number: 29, symbol: 'Cu', name: 'Đồng', category: 'metal', row: 4, col: 11, info: 'Đồng là kim loại dẫn điện tốt, dùng trong dây điện và ống nước.' },
+      { number: 30, symbol: 'Zn', name: 'Kẽm', category: 'metal', row: 4, col: 12, info: 'Kẽm là kim loại được dùng để mạ, chống gỉ và hỗ trợ hệ miễn dịch.' },
+      { number: 31, symbol: 'Ga', name: 'Gali', category: 'metal', row: 4, col: 13, info: 'Gali là kim loại mềm có tính dẫn điện và được dùng trong bán dẫn.' },
+      { number: 32, symbol: 'Ge', name: 'Germani', category: 'metalloid', row: 4, col: 14, info: 'Germani là á kim dùng làm chất bán dẫn trong công nghệ điện tử.' },
+      { number: 33, symbol: 'As', name: 'Asen', category: 'metalloid', row: 4, col: 15, info: 'Asen là á kim được dùng trong hợp chất hóa học, kính và bán dẫn.' },
+      { number: 34, symbol: 'Se', name: 'Selen', category: 'nonmetal', row: 4, col: 16, info: 'Selen là phi kim có vai trò sinh học và được dùng trong điện tử.' },
+      { number: 35, symbol: 'Br', name: 'Brôm', category: 'halogen', row: 4, col: 17, info: 'Brôm là halogen ở dạng lỏng đỏ nâu, được dùng trong sản xuất thuốc và hóa chất.' },
+      { number: 36, symbol: 'Kr', name: 'Krypton', category: 'noble', row: 4, col: 18, info: 'Krypton là khí hiếm, rất ít phản ứng và được dùng trong đèn flash.' },
+      { number: 37, symbol: 'Rb', name: 'Rubidi', category: 'metal', row: 5, col: 1, info: 'Rubidi là kim loại kiềm rất phản ứng, có thể được dùng trong điện tử và khoa học.' },
+      { number: 38, symbol: 'Sr', name: 'Stronti', category: 'metal', row: 5, col: 2, info: 'Stronti là kim loại kiềm thổ, được dùng trong pháo hoa và đồng hồ.' },
+      { number: 39, symbol: 'Y', name: 'Ytri', category: 'metal', row: 5, col: 3, info: 'Ytri là kim loại đất hiếm, được dùng trong đèn laser và hợp kim.' },
+      { number: 40, symbol: 'Zr', name: 'Zirconi', category: 'metal', row: 5, col: 4, info: 'Zirconi là kim loại bền nhiệt và chống ăn mòn, dùng trong hạt nhân và công nghiệp.' },
+      { number: 41, symbol: 'Nb', name: 'Niobi', category: 'metal', row: 5, col: 5, info: 'Niobi là kim loại chuyển tiếp có tính bền nhiệt, dùng trong thép và hợp kim.' },
+      { number: 42, symbol: 'Mo', name: 'Molypden', category: 'metal', row: 5, col: 6, info: 'Molypden là kim loại cứng, dùng trong thép và công nghiệp hóa chất.' },
+      { number: 43, symbol: 'Tc', name: 'Techneti', category: 'metal', row: 5, col: 7, info: 'Techneti là nguyên tố phóng xạ, được dùng trong chẩn đoán hình ảnh y khoa.' },
+      { number: 44, symbol: 'Ru', name: 'Ruteni', category: 'metal', row: 5, col: 8, info: 'Ruteni là kim loại quý, bền và dùng trong điện tử, mạ và xúc tác.' },
+      { number: 45, symbol: 'Rh', name: 'Rhodi', category: 'metal', row: 5, col: 9, info: 'Rhodi là kim loại quý, dùng trong xúc tác và điện tử cao cấp.' },
+      { number: 46, symbol: 'Pd', name: 'Palladi', category: 'metal', row: 5, col: 10, info: 'Palladi là kim loại quý, rất tốt để xúc tác và mạ.' },
+      { number: 47, symbol: 'Ag', name: 'Bạc', category: 'metal', row: 5, col: 11, info: 'Bạc là kim loại trắng sáng, dẫn điện tốt và được dùng trong đồ trang sức.' },
+      { number: 48, symbol: 'Cd', name: 'Cadmi', category: 'metal', row: 5, col: 12, info: 'Cadmi là kim loại mềm, độc và được dùng trong pin và mạ.' },
+      { number: 49, symbol: 'In', name: 'Indi', category: 'metal', row: 5, col: 13, info: 'Indi là kim loại mềm có độ dẫn điện cao, dùng trong màn hình điện tử.' },
+      { number: 50, symbol: 'Sn', name: 'Thiếc', category: 'metal', row: 5, col: 14, info: 'Thiếc là kim loại mềm, dùng trong hợp kim, đồ hàn và nhựa.' },
+      { number: 51, symbol: 'Sb', name: 'Antimon', category: 'metalloid', row: 5, col: 15, info: 'Antimon là á kim, thường dùng trong hợp kim chống ăn mòn và chất chống cháy.' },
+      { number: 52, symbol: 'Te', name: 'Telua', category: 'metalloid', row: 5, col: 16, info: 'Telua là á kim, có ứng dụng trong bán dẫn và điện tử.' },
+      { number: 53, symbol: 'I', name: 'Iot', category: 'halogen', row: 5, col: 17, info: 'Iot là halogen cần thiết cho tuyến giáp và được dùng làm thuốc sát trùng.' },
+      { number: 54, symbol: 'Xe', name: 'Xenon', category: 'noble', row: 5, col: 18, info: 'Xenon là khí hiếm có ứng dụng trong đèn flash và máy chiếu.' },
+      { number: 55, symbol: 'Cs', name: 'Cesi', category: 'metal', row: 6, col: 1, info: 'Cesi là kim loại kiềm rất mềm, dễ bay hơi và phản ứng mạnh với nước.' },
+      { number: 56, symbol: 'Ba', name: 'Bari', category: 'metal', row: 6, col: 2, info: 'Bari là kim loại kiềm thổ, được dùng trong hóa chất và khám phá y khoa.' },
+      { number: 57, symbol: 'La', name: 'Lantan', category: 'metal', row: 6, col: 3, info: 'Lantan là kim loại đất hiếm, dùng trong pin, kính và catốt màn hình.' },
+      { number: 58, symbol: 'Ce', name: 'Xeri', category: 'metal', row: 8, col: 4, info: 'Xeri là kim loại đất hiếm, dùng trong lọc hạt nhân và kỹ thuật quang học.' },
+      { number: 59, symbol: 'Pr', name: 'Praseodymi', category: 'metal', row: 8, col: 5, info: 'Praseodymi là kim loại đất hiếm được dùng trong gương laser và pin.' },
+      { number: 60, symbol: 'Nd', name: 'Neodymi', category: 'metal', row: 8, col: 6, info: 'Neodymi là kim loại đất hiếm, rất quan trọng trong nam châm mạnh.' },
+      { number: 61, symbol: 'Pm', name: 'Promethi', category: 'metal', row: 8, col: 7, info: 'Promethi là nguyên tố phóng xạ, dùng trong nguồn năng lượng và kính.' },
+      { number: 62, symbol: 'Sm', name: 'Samari', category: 'metal', row: 8, col: 8, info: 'Samari là kim loại đất hiếm, dùng trong nam châm và công nghệ hạt nhân.' },
+      { number: 63, symbol: 'Eu', name: 'Europi', category: 'metal', row: 8, col: 9, info: 'Europi là kim loại đất hiếm dùng trong màn hình và bóng đèn LED.' },
+      { number: 64, symbol: 'Gd', name: 'Gadolini', category: 'metal', row: 8, col: 10, info: 'Gadolini là kim loại đất hiếm dùng trong từ tính và chẩn đoán MRI.' },
+      { number: 65, symbol: 'Tb', name: 'Terbi', category: 'metal', row: 8, col: 11, info: 'Terbi là kim loại đất hiếm dùng trong màn hình và laser.' },
+      { number: 66, symbol: 'Dy', name: 'Disprosi', category: 'metal', row: 8, col: 12, info: 'Disprosi là kim loại đất hiếm dùng trong nam châm và vật liệu từ.' },
+      { number: 67, symbol: 'Ho', name: 'Holmi', category: 'metal', row: 8, col: 13, info: 'Holmi là kim loại đất hiếm dùng trong laser và magnet mạnh.' },
+      { number: 68, symbol: 'Er', name: 'Erbi', category: 'metal', row: 8, col: 14, info: 'Erbi là kim loại đất hiếm dùng trong quang học, laser và vật liệu.' },
+      { number: 69, symbol: 'Tm', name: 'Thuli', category: 'metal', row: 8, col: 15, info: 'Thuli là kim loại đất hiếm dùng trong thiết bị laser và điện tử.' },
+      { number: 70, symbol: 'Yb', name: 'Ytterbi', category: 'metal', row: 8, col: 16, info: 'Ytterbi là kim loại đất hiếm dùng trong vật liệu và công nghệ laser.' },
+      { number: 71, symbol: 'Lu', name: 'Lutet', category: 'metal', row: 8, col: 17, info: 'Lutet là kim loại đất hiếm, đóng vai trò quan trọng trong nghiên cứu vật liệu.' },
+      { number: 72, symbol: 'Hf', name: 'Hafni', category: 'metal', row: 6, col: 4, info: 'Hafni là kim loại chuyển tiếp, dùng trong vật liệu chịu nhiệt cao.' },
+      { number: 73, symbol: 'Ta', name: 'Tantal', category: 'metal', row: 6, col: 5, info: 'Tantal là kim loại bền nhiệt và chống ăn mòn, dùng trong điện tử.' },
+      { number: 74, symbol: 'W', name: 'Volfram', category: 'metal', row: 6, col: 6, info: 'Volfram là kim loại rất cứng, dùng trong dây tóc bóng đèn và dụng cụ cắt.' },
+      { number: 75, symbol: 'Re', name: 'Reni', category: 'metal', row: 6, col: 7, info: 'Reni là kim loại nặng, dùng trong máy bay và động cơ công nghiệp.' },
+      { number: 76, symbol: 'Os', name: 'Osmi', category: 'metal', row: 6, col: 8, info: 'Osmi là kim loại nặng, rất dày và cứng, dùng trong hợp kim.' },
+      { number: 77, symbol: 'Ir', name: 'Iridi', category: 'metal', row: 6, col: 9, info: 'Iridi là kim loại quý, rất bền và chịu nhiệt cao.' },
+      { number: 78, symbol: 'Pt', name: 'Bạch kim', category: 'metal', row: 6, col: 10, info: 'Bạch kim là kim loại quý, dẫn điện tốt và chống ăn mòn.' },
+      { number: 79, symbol: 'Au', name: 'Vàng', category: 'metal', row: 6, col: 11, info: 'Vàng là kim loại quý, dẫn điện tốt và được dùng trong trang sức, điện tử.' },
+      { number: 80, symbol: 'Hg', name: 'Thủy ngân', category: 'metal', row: 6, col: 12, info: 'Thủy ngân là kim loại lỏng ở nhiệt độ phòng, nên dễ bay hơi và độc.' },
+      { number: 81, symbol: 'Tl', name: 'Thali', category: 'metal', row: 6, col: 13, info: 'Thali là kim loại mềm, độc và ít được dùng trong công nghiệp hiện đại.' },
+      { number: 82, symbol: 'Pb', name: 'Chì', category: 'metal', row: 6, col: 14, info: 'Chì là kim loại nặng, mềm và độc, từng được dùng trong ống nước và pin.' },
+      { number: 83, symbol: 'Bi', name: 'Bismuth', category: 'metal', row: 6, col: 15, info: 'Bismuth là kim loại có tính giãn nở độc đáo, dùng trong hợp kim và y học.' },
+      { number: 84, symbol: 'Po', name: 'Poloni', category: 'metalloid', row: 6, col: 16, info: 'Poloni là nguyên tố phóng xạ, thuộc nhóm bán kim loại và rất nguy hiểm.' },
+      { number: 85, symbol: 'At', name: 'Astatin', category: 'halogen', row: 6, col: 17, info: 'Astatin là halogen rất hiếm và phóng xạ, có tính chất hóa học tương tự iot.' },
+      { number: 86, symbol: 'Rn', name: 'Radon', category: 'noble', row: 6, col: 18, info: 'Radon là khí hiếm phóng xạ, nguy hiểm nếu tích tụ trong nhà.' },
+      { number: 87, symbol: 'Fr', name: 'Franci', category: 'metal', row: 7, col: 1, info: 'Franci là kim loại kiềm rất phóng xạ và rất phản ứng với nước.' },
+      { number: 88, symbol: 'Ra', name: 'Radi', category: 'metal', row: 7, col: 2, info: 'Radi là kim loại kiềm thổ phóng xạ, được dùng trong nghiên cứu hạt nhân.' },
+      { number: 89, symbol: 'Ac', name: 'Actini', category: 'metal', row: 7, col: 3, info: 'Actini là kim loại phóng xạ, thuộc nhóm actinide và có vai trò trong hạt nhân.' },
+      { number: 90, symbol: 'Th', name: 'Thori', category: 'metal', row: 9, col: 4, info: 'Thori là kim loại phóng xạ, được dùng trong nhiên liệu hạt nhân.' },
+      { number: 91, symbol: 'Pa', name: 'Protactini', category: 'metal', row: 9, col: 5, info: 'Protactini là kim loại phóng xạ dùng trong nghiên cứu hạt nhân.' },
+      { number: 92, symbol: 'U', name: 'Urani', category: 'metal', row: 9, col: 6, info: 'Urani là kim loại phóng xạ, dùng làm nhiên liệu cho lò phản ứng hạt nhân.' },
+      { number: 93, symbol: 'Np', name: 'Neptuni', category: 'metal', row: 9, col: 7, info: 'Neptuni là kim loại phóng xạ, là nguyên tố nằm sau urani trong chuỗi hạt nhân.' },
+      { number: 94, symbol: 'Pu', name: 'Plutoni', category: 'metal', row: 9, col: 8, info: 'Plutoni là kim loại phóng xạ, dùng trong nhiên liệu và vũ khí hạt nhân.' },
+      { number: 95, symbol: 'Am', name: 'Americi', category: 'metal', row: 9, col: 9, info: 'Americi là kim loại phóng xạ, được dùng trong máy dò khói và nguồn năng lượng.' },
+      { number: 96, symbol: 'Cm', name: 'Curi', category: 'metal', row: 9, col: 10, info: 'Curi là kim loại phóng xạ, dùng trong nghiên cứu và nguồn nhiệt hạt nhân.' },
+      { number: 97, symbol: 'Bk', name: 'Berkeli', category: 'metal', row: 9, col: 11, info: 'Berkeli là nguyên tố tổng hợp phóng xạ, dùng trong nghiên cứu khoa học.' },
+      { number: 98, symbol: 'Cf', name: 'Californi', category: 'metal', row: 9, col: 12, info: 'Californi là nguyên tố tổng hợp có tính phóng xạ cao, dùng trong nghiên cứu.' },
+      { number: 99, symbol: 'Es', name: 'Einsteini', category: 'metal', row: 9, col: 13, info: 'Einsteini là nguyên tố tổng hợp, dùng trong nghiên cứu hạt nhân và vật lý.' },
+      { number: 100, symbol: 'Fm', name: 'Fermi', category: 'metal', row: 9, col: 14, info: 'Fermi là nguyên tố tổng hợp phóng xạ, thuộc nhóm actinide.' },
+      { number: 101, symbol: 'Md', name: 'Mendelevi', category: 'metal', row: 9, col: 15, info: 'Mendelevi là nguyên tố tổng hợp phóng xạ, đặt theo tên Mendeleev.' },
+      { number: 102, symbol: 'No', name: 'Nobeli', category: 'metal', row: 9, col: 16, info: 'Nobeli là nguyên tố tổng hợp phóng xạ, thuộc nhóm actinide.' },
+      { number: 103, symbol: 'Lr', name: 'Lawrenci', category: 'metal', row: 9, col: 17, info: 'Lawrenci là nguyên tố tổng hợp phóng xạ, thuộc dòng actinide cuối cùng.' },
+      { number: 104, symbol: 'Rf', name: 'Rutherfordi', category: 'metal', row: 7, col: 4, info: 'Rutherfordi là nguyên tố tổng hợp rất phóng xạ, có tính chất kim loại.' },
+      { number: 105, symbol: 'Db', name: 'Dubni', category: 'metal', row: 7, col: 5, info: 'Dubni là nguyên tố tổng hợp phóng xạ, thuộc chu kỳ 7.' },
+      { number: 106, symbol: 'Sg', name: 'Seaborgi', category: 'metal', row: 7, col: 6, info: 'Seaborgi là kim loại tổng hợp rất phóng xạ, dùng trong nghiên cứu vật lý.' },
+      { number: 107, symbol: 'Bh', name: 'Bohri', category: 'metal', row: 7, col: 7, info: 'Bohri là nguyên tố tổng hợp phóng xạ, là kim loại chuyển tiếp.' },
+      { number: 108, symbol: 'Hs', name: 'Hassium', category: 'metal', row: 7, col: 8, info: 'Hassium là nguyên tố tổng hợp có tính phóng xạ cao, thuộc nhóm chuyển tiếp.' },
+      { number: 109, symbol: 'Mt', name: 'Meitneri', category: 'metal', row: 7, col: 9, info: 'Meitneri là nguyên tố tổng hợp cực hiếm, thuộc nhóm kim loại nặng.' },
+      { number: 110, symbol: 'Ds', name: 'Darmstadti', category: 'metal', row: 7, col: 10, info: 'Darmstadti là nguyên tố tổng hợp, rất ngắn đời và phóng xạ mạnh.' },
+      { number: 111, symbol: 'Rg', name: 'Roentgeni', category: 'metal', row: 7, col: 11, info: 'Roentgeni là nguyên tố tổng hợp rất ít và khó nghiên cứu.' },
+      { number: 112, symbol: 'Cn', name: 'Copernici', category: 'metal', row: 7, col: 12, info: 'Copernici là kim loại tổng hợp phóng xạ, thuộc chu kỳ 7.' },
+      { number: 113, symbol: 'Nh', name: 'Nihoni', category: 'metal', row: 7, col: 13, info: 'Nihoni là nguyên tố tổng hợp phóng xạ, thuộc kim loại nặng.' },
+      { number: 114, symbol: 'Fl', name: 'Flerovi', category: 'metal', row: 7, col: 14, info: 'Flerovi là nguyên tố tổng hợp, được đặt theo tên nhà vật lý Flerov.' },
+      { number: 115, symbol: 'Mc', name: 'Moscovi', category: 'metal', row: 7, col: 15, info: 'Moscovi là nguyên tố tổng hợp phóng xạ, có tính chất kim loại.' },
+      { number: 116, symbol: 'Lv', name: 'Livermori', category: 'metal', row: 7, col: 16, info: 'Livermori là nguyên tố tổng hợp rất phóng xạ, thuộc khối p.' },
+      { number: 117, symbol: 'Ts', name: 'Tennessin', category: 'halogen', row: 7, col: 17, info: 'Tennessin là halogen tổng hợp rất phóng xạ, có tính chất tương tự iot.' },
+      { number: 118, symbol: 'Og', name: 'Oganesson', category: 'noble', row: 7, col: 18, info: 'Oganesson là khí hiếm tổng hợp phóng xạ, rất ít nghiên cứu.' }
+    ];
+
+    const board = document.getElementById('periodicBoard');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const detailSymbol = document.getElementById('detailSymbol');
+    const detailName = document.getElementById('detailName');
+    const detailText = document.getElementById('detailText');
+    const detailNumber = document.getElementById('detailNumber');
+    const detailCategory = document.getElementById('detailCategory');
+    const detailMass = document.getElementById('detailMass');
+    const detailValence = document.getElementById('detailValence');
+
+    const categoryMap = {
+      metal: 'Kim loại',
+      nonmetal: 'Phi kim',
+      metalloid: 'Á kim',
+      halogen: 'Halogen',
+      noble: 'Khí hiếm'
+    };
+
+    const atomicMasses = [
+      '1.008', '4.0026', '6.94', '9.0122', '10.81', '12.011', '14.007', '15.999', '18.998', '20.180',
+      '22.990', '24.305', '26.982', '28.085', '30.974', '32.06', '35.45', '39.948', '39.098', '40.078',
+      '44.956', '47.867', '50.942', '51.996', '54.938', '55.845', '58.933', '58.693', '63.546', '65.38',
+      '69.723', '72.630', '74.922', '78.971', '79.904', '83.798', '85.468', '87.62', '88.906', '91.224',
+      '92.906', '95.95', '[98]', '101.07', '102.91', '106.42', '107.87', '112.41', '114.82', '118.71',
+      '121.76', '127.60', '126.90', '131.29', '132.91', '137.33', '138.91', '140.12', '140.91', '144.24',
+      '[145]', '150.36', '151.96', '157.25', '158.93', '162.50', '164.93', '167.26', '168.93', '173.05',
+      '174.97', '178.49', '180.95', '183.84', '186.21', '190.23', '192.22', '195.08', '196.97', '200.59',
+      '204.38', '207.2', '208.98', '[209]', '[210]', '[222]', '[223]', '[226]', '[227]', '232.04',
+      '231.04', '238.03', '[237]', '[244]', '[243]', '[247]', '[247]', '[251]', '[252]', '[257]',
+      '[258]', '[259]', '[266]', '[267]', '[268]', '[269]', '[270]', '[277]', '[278]', '[281]',
+      '[282]', '[285]', '[286]', '[289]', '[290]', '[293]', '[294]', '[294]'
+    ];
+
+    const valencesBySymbol = {
+      H: 'I', He: '0', Li: 'I', Be: 'II', B: 'III', C: 'II, IV', N: 'III, V', O: 'II', F: 'I', Ne: '0',
+      Na: 'I', Mg: 'II', Al: 'III', Si: 'IV', P: 'III, V', S: 'II, IV, VI', Cl: 'I, III, V, VII', Ar: '0',
+      K: 'I', Ca: 'II', Sc: 'III', Ti: 'II, III, IV', V: 'II, III, IV, V', Cr: 'II, III, VI',
+      Mn: 'II, III, IV, VI, VII', Fe: 'II, III', Co: 'II, III', Ni: 'II, III', Cu: 'I, II',
+      Zn: 'II', Ga: 'III', Ge: 'II, IV', As: 'III, V', Se: 'II, IV, VI', Br: 'I, III, V, VII',
+      Kr: '0, II', Rb: 'I', Sr: 'II', Y: 'III', Zr: 'IV', Nb: 'III, V', Mo: 'II, III, IV, V, VI',
+      Tc: 'IV, VII', Ru: 'II, III, IV, VI, VIII', Rh: 'II, III, IV', Pd: 'II, IV', Ag: 'I',
+      Cd: 'II', In: 'I, III', Sn: 'II, IV', Sb: 'III, V', Te: 'II, IV, VI', I: 'I, III, V, VII',
+      Xe: '0, II, IV, VI, VIII', Cs: 'I', Ba: 'II', La: 'III', Ce: 'III, IV', Pr: 'III, IV',
+      Nd: 'III', Pm: 'III', Sm: 'II, III', Eu: 'II, III', Gd: 'III', Tb: 'III, IV', Dy: 'III',
+      Ho: 'III', Er: 'III', Tm: 'II, III', Yb: 'II, III', Lu: 'III', Hf: 'IV', Ta: 'V',
+      W: 'II, III, IV, V, VI', Re: 'II, III, IV, VI, VII', Os: 'II, III, IV, VI, VIII',
+      Ir: 'III, IV', Pt: 'II, IV', Au: 'I, III', Hg: 'I, II', Tl: 'I, III', Pb: 'II, IV',
+      Bi: 'III, V', Po: 'II, IV, VI', At: 'I, III, V, VII', Rn: '0, II', Fr: 'I', Ra: 'II',
+      Ac: 'III', Th: 'IV', Pa: 'IV, V', U: 'III, IV, V, VI', Np: 'III, IV, V, VI, VII',
+      Pu: 'III, IV, V, VI, VII', Am: 'II, III, IV, V, VI', Cm: 'III, IV', Bk: 'III, IV',
+      Cf: 'II, III, IV', Es: 'II, III', Fm: 'II, III', Md: 'II, III', No: 'II, III', Lr: 'III'
+    };
+
+    periodicData.forEach((element) => {
+      element.name = englishNames[element.symbol] || element.name;
+    });
+
+    function createElementCard(element) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = `element-card ${element.category} ${getVisualGroup(element)}`;
+      button.dataset.category = element.category;
+      button.dataset.name = element.name;
+      button.dataset.symbol = element.symbol;
+      button.dataset.number = element.number;
+      button.dataset.info = element.info;
+      button.dataset.group = getVisualGroup(element);
+      button.style.gridColumn = element.number >= 57 && element.number <= 71
+        ? element.number - 54
+        : element.number >= 89 && element.number <= 103
+          ? element.number - 86
+          : element.col;
+      button.style.gridRow = element.number >= 57 && element.number <= 71
+        ? 9
+        : element.number >= 89 && element.number <= 103
+          ? 10
+          : element.row;
+      button.innerHTML = `
+        <span class="element-number">${element.number}</span>
+        <span class="element-symbol">${element.symbol}</span>
+        <span class="element-name">${element.name}</span>
+      `;
+      return button;
+    }
+
+    function getVisualGroup(element) {
+      const number = element.number;
+      if ([3, 11, 19, 37, 55, 87].includes(number)) return 'alkali';
+      if ([4, 12, 20, 38, 56, 88].includes(number)) return 'alkaline-earth';
+      if (number >= 57 && number <= 71) return 'lanthanoid';
+      if (number >= 89 && number <= 103) return 'actinoid';
+      if ([5, 14, 32, 33, 51, 52, 85].includes(number)) return 'metalloid';
+      if ([109, 110, 111, 113, 115, 116, 117, 118].includes(number)) return 'unknown';
+      if (element.category === 'noble' && number !== 118) return 'noble-gas';
+      if ([13, 31, 49, 50, 81, 82, 83, 84, 114].includes(number)) return 'post-transition-metal';
+      if ([21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+        39, 40, 41, 42, 43, 44, 45, 46, 47, 48,
+        72, 73, 74, 75, 76, 77, 78, 79, 80,
+        104, 105, 106, 107, 108, 112].includes(number)) {
+        return 'transition-metal';
+      }
+      return 'other-nonmetal';
+    }
+
+    [
+      { label: '57–71', row: 6 },
+      { label: '89–103', row: 7 }
+    ].forEach(({ label, row }) => {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'element-placeholder';
+      placeholder.textContent = label;
+      placeholder.style.gridColumn = 3;
+      placeholder.style.gridRow = row;
+      board.appendChild(placeholder);
+    });
+
+    periodicData.forEach((element) => board.appendChild(createElementCard(element)));
+
+    const cards = document.querySelectorAll('.element-card');
+    const legendButtons = document.querySelectorAll('.legend-item[data-group]');
+    let selectedGroup = null;
+
+    function clearGroupSelection() {
+      selectedGroup = null;
+      legendButtons.forEach((legend) => legend.setAttribute('aria-pressed', 'false'));
+      cards.forEach((card) => card.classList.remove('group-highlighted', 'group-dimmed'));
+    }
+
+    legendButtons.forEach((legend) => {
+      legend.addEventListener('click', () => {
+        const group = legend.dataset.group;
+        const isAlreadySelected = selectedGroup === group;
+        clearGroupSelection();
+        cards.forEach((card) => card.classList.remove('category-highlighted', 'category-dimmed'));
+        filterButtons.forEach((button) => button.classList.toggle('active', button.dataset.filter === 'all'));
+        if (isAlreadySelected) return;
+
+        selectedGroup = group;
+        legend.setAttribute('aria-pressed', 'true');
+        cards.forEach((card) => {
+          const matchesGroup = card.dataset.group === group;
+          card.classList.toggle('group-highlighted', matchesGroup);
+          card.classList.toggle('group-dimmed', !matchesGroup);
+        });
+      });
+    });
+
+    function updateDetail(card) {
+      if (!card) return;
+      detailSymbol.textContent = card.dataset.symbol || '';
+      detailName.textContent = card.dataset.name || '';
+      detailText.textContent = card.dataset.info || '';
+      detailNumber.textContent = card.dataset.number || '';
+      detailCategory.textContent = categoryMap[card.dataset.category] || 'Khác';
+      detailMass.textContent = atomicMasses[Number(card.dataset.number) - 1] || 'Chưa xác định';
+      detailValence.textContent = valencesBySymbol[card.dataset.symbol] || 'Chưa xác định';
+      cards.forEach((item) => item.classList.toggle('active', item === card));
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const selected = button.dataset.filter;
+        filterButtons.forEach((btn) => btn.classList.toggle('active', btn === button));
+        clearGroupSelection();
+
+        cards.forEach((card) => {
+          const number = Number(card.dataset.number);
+          const matchesCategory = selected === 'all'
+            || card.dataset.category === selected
+            || (selected === 'nonmetal' && number >= 57 && number <= 103)
+            || (selected === 'metalloid' && number >= 89 && number <= 103);
+          card.classList.toggle('category-highlighted', selected !== 'all' && matchesCategory);
+          card.classList.toggle('category-dimmed', selected !== 'all' && !matchesCategory);
+        });
+      });
+    });
+
+    cards.forEach((card) => {
+      card.addEventListener('click', () => updateDetail(card));
+    });
+
+    updateDetail(document.querySelector('.element-card[data-symbol="O"]') || cards[0]);
+  </script>
+</body>
+</html>

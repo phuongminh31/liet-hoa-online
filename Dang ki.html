@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hóa Online - Đăng ký</title>
+    <link rel="stylesheet" href="CSS.css?v=2" />
+</head>
+<body>
+    <section class="auth-page">
+        <div class="auth-shell">
+            <aside class="auth-left">
+                <div class="brand">
+                    <div class="logo">H</div>
+                    <div>
+                        <div class="brand-name">Hóa Online</div>
+                        <div class="brand-sub">Learning Lab</div>
+                    </div>
+                </div>
+
+                <section class="hero-content">
+                    <div class="hero-kicker">Khởi đầu mới</div>
+                    <h1>Bắt đầu hành trình Hóa học</h1>
+                    <p class="hero-text">
+                        Thiết lập tài khoản để theo dõi lộ trình, làm bài kiểm tra và nâng cao điểm số môn Hóa của bạn.
+                    </p>
+
+                    <div class="hero-metrics">
+                        <div class="metric">
+                        </div>
+                    </div>
+                </section>
+
+                <div class="learning-list">
+                    <span class="grade-chip">Hóa lớp 7</span>
+                    <span class="grade-chip">Hóa lớp 8</span>
+                    <span class="grade-chip">Hóa lớp 9</span>
+                    <span>Nhóm học</span>
+                    <span>Bài kiểm tra</span>
+                    <span>Flashcards</span>
+                </div>
+            </aside>
+
+            <main class="auth-right">
+                <section class="auth-card">
+                    <div class="auth-head">
+                        <span class="label">Tạo tài khoản</span>
+                        <span class="link"><a href="Dang_nhap.html">Đăng nhập</a></span>
+                    </div>
+
+                    <h2 class="auth-title">Đăng ký</h2>
+                    <p class="auth-subtitle">Tạo tài khoản để bắt đầu học ngay hôm nay.</p>
+
+                    <form id="registerForm" class="auth-form" data-message="Tạo tài khoản thành công! Chào mừng bạn đến Hóa Online." novalidate>
+                        <div class="form-split">
+                            <div class="form-group">
+                                <label for="first-name">Họ</label>
+                                <input type="text" id="first-name" name="first-name" placeholder="Nguyễn" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="last-name">Tên</label>
+                                <input type="text" id="last-name" name="last-name" placeholder="An" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg-email">Email học viên</label>
+                            <div class="input-with-icon">
+                                <input type="email" id="reg-email" name="reg-email" placeholder="name@example.com" required />
+                                <span class="input-icon">✉</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="grade">Lớp Hóa</label>
+                            <select id="grade" name="grade" required>
+                                <option value="">Chọn lớp Hóa</option>
+                                <option>Hóa lớp 7</option>
+                                <option>Hóa lớp 8</option>
+                                <option>Hóa lớp 9</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg-password">Mật khẩu</label>
+                            <div class="input-with-icon">
+                                <input type="password" id="reg-password" name="reg-password" placeholder="••••••••" required />
+                                <span class="input-icon">🔐</span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="keep-login">
+                                <input type="checkbox" name="terms" required /> Đồng ý điều khoản
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Tạo tài khoản</button>
+
+                        <div class="divider">
+                            <span>hoặc</span>
+                        </div>
+
+                        <div class="social-list">
+                            <button type="button" class="btn">Google</button>
+                            <button type="button" class="btn">Facebook</button>
+                        </div>
+
+                        <div class="notice">Tạo tài khoản thành công.</div>
+                    </form>
+
+                    <div class="form-note">
+                        Đã có tài khoản? <a href="Dang_nhap.html">Đăng nhập ngay</a>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </section>
+
+    <script src="Java.js?v=3"></script>
+</body>
+</html>

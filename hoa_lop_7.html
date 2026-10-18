@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hóa học lớp 7</title>
+  <link rel="stylesheet" href="hoa_learning.css?v=3" />
+</head>
+<body class="hoa-page" data-grade="7">
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">H</span>
+      <span>Hóa Online</span>
+    </div>
+
+    <nav class="main-nav">
+      <a href="Trang_chinh_chu.html">Trang chủ</a>
+      <a href="hoa_lop_7.html" class="active">Lớp 7</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="ghost-btn" href="Trang_chinh_chu.html">Về trang chính</a>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Lớp 7</span>
+        <h1>Chất, nguyên tử và phản ứng hóa học</h1>
+        <p>Khám phá các khái niệm nền tảng của hóa học qua hình ảnh, thẻ ghi nhớ, quiz nhanh và bài học ngắn giúp bạn học tốt hơn mỗi ngày.</p>
+
+        <div class="hero-actions">
+          <button class="primary-btn" id="randomLesson" type="button">Gợi ý bài học</button>
+          <a class="ghost-btn" href="#quiz">Làm quiz</a>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-number">04</span>
+            <span class="stat-label">Chủ đề chính</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">20</span>
+            <span class="stat-label">Câu mỗi lượt</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">90%</span>
+            <span class="stat-label">Mục tiêu tuần</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="molecule-scene" aria-hidden="true">
+          <span class="atom">H</span>
+          <span class="atom">O</span>
+          <span class="atom">Na</span>
+          <span class="atom">Cl</span>
+          <div class="molecule-ring"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="lesson-01">
+      <div class="section-head">
+        <h2>Học nhanh theo chủ đề</h2>
+        <label class="search-box" aria-label="Tìm bài học">
+          <span>⌕</span>
+          <input id="searchInput" type="text" placeholder="Tìm bài học hoặc công thức" />
+        </label>
+      </div>
+      <div class="lesson-grid" id="lessonList"></div>
+    </section>
+
+    <section class="two-col">
+      <div class="panel">
+        <div class="section-head">
+          <h2>Thẻ ghi nhớ</h2>
+        </div>
+        <div class="flashcard-wrap" id="flashcardWrap"></div>
+      </div>
+
+      <div class="panel">
+        <div class="section-head">
+          <h2>Công thức cần nhớ</h2>
+        </div>
+        <div class="formula-grid" id="formulaList"></div>
+      </div>
+    </section>
+
+    <section class="panel" id="quiz">
+      <div class="section-head">
+        <h2>Luyện tập nhanh</h2>
+        <button class="ghost-btn" id="restartQuiz" type="button">Làm lại</button>
+      </div>
+      <div class="quiz-box">
+        <div class="question-text" id="questionText"></div>
+        <div class="answer-list" id="answerList"></div>
+        <div class="quiz-footer">
+          <span class="quiz-status" id="quizStatus"></span>
+          <button class="quiz-btn" id="nextQuestion" type="button">Câu tiếp theo</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <script src="quizBank.js?v=1"></script>
+  <script src="hoa_learning.js?v=5"></script>
+</body>
+</html>

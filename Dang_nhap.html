@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hóa Online - Đăng nhập</title>
+    <link rel="stylesheet" href="CSS.css?v=2" />
+</head>
+<body>
+    <section class="auth-page">
+        <div class="auth-shell">
+            <aside class="auth-left">
+                <div class="brand">
+                    <div class="logo">H</div>
+                    <div>
+                        <div class="brand-name">Hóa Online</div>
+                        <div class="brand-sub">Learning Lab</div>
+                    </div>
+                </div>
+
+                <section class="hero-content">
+                    <div class="hero-kicker">Chương trình Hóa học</div>
+                    <h1>Khám phá thế giới hóa học</h1>
+                    <p class="hero-text">
+                        Học theo lộ trình, luyện bài tập và xây dựng nền tảng hóa học vững chắc mỗi ngày.
+                    </p>
+
+                    <div class="hero-metrics">
+                        <div class="metric">
+                        </div>
+                    </div>
+                </section>
+
+                <div class="learning-list">
+                    <span class="grade-chip">Hóa lớp 7</span>
+                    <span class="grade-chip">Hóa lớp 8</span>
+                    <span class="grade-chip">Hóa lớp 9</span>
+                    <span>Phản ứng hóa học</span>
+                    <span>Nguyên tử</span>
+                    <span>Mol & dung dịch</span>
+                </div>
+            </aside>
+
+            <main class="auth-right">
+                <section class="auth-card">
+                    <div class="auth-head">
+                        <span class="label">Chào mừng bạn</span>
+                        <span class="link"><a href="Dang ki.html">Đăng ký</a></span>
+                    </div>
+
+                    <h2 class="auth-title">Đăng nhập</h2>
+                    <p class="auth-subtitle">Tiếp tục hành trình học Hóa học của bạn.</p>
+
+                    <form id="loginForm" class="auth-form" data-message="Đăng nhập thành công! Chào mừng bạn quay lại." novalidate>
+                        <div class="form-group">
+                            <label for="email">Email học viên</label>
+                            <div class="input-with-icon">
+                                <input type="email" id="email" name="email" placeholder="name@example.com" required />
+                                <span class="input-icon">✉</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Mật khẩu</label>
+                            <div class="input-with-icon">
+                                <input type="password" id="password" name="password" placeholder="••••••••" required />
+                                <span class="input-icon">🔐</span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="keep-login">
+                                <input type="checkbox" name="remember" /> Ghi nhớ đăng nhập
+                            </label>
+                            <a href="#">Quên mật khẩu?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" onclick="login()">Đăng nhập</button>
+
+                        <div class="divider">
+                            <span>hoặc</span>
+                        </div>
+
+                        <div class="social-list">
+                            <button type="button" class="btn">Google</button>
+                            <button type="button" class="btn">Facebook</button>
+                        </div>
+
+                        <div class="notice">Đăng nhập thành công.</div>
+                    </form>
+
+                    <div class="form-note">
+                        Bạn chưa có tài khoản? <a href="Dang ki.html">Tạo tài khoản mới</a>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </section>
+
+    <script src="Java.js?v=4"></script>
+</body>
+</html>
